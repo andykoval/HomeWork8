@@ -80,6 +80,7 @@ public class StreamMain {
         while ((count = in.read(buff)) != -1)
             out.write(buff, 0, count);
         closeQuietly(in);
+        closeAndFlushQuietly(out);
     }
 
 
