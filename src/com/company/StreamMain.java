@@ -59,6 +59,19 @@ public class StreamMain {
         }
     }
 
+    public static void closeAndFlushQuietly(java.io.OutputStream out) throws IOException {
+        if (out != null) {
+            try {
+                out.flush();
+            } catch (IOException ignore) {
+            }
+            try {
+                out.close();
+            } catch (IOException ignore) {
+            }
+        }
+    }
+
     public static void readAndWriteByByteArray(File f1, File f2) throws IOException {
         InputStream in = new FileInputStream(f1);
         OutputStream out = new FileOutputStream(f2);
