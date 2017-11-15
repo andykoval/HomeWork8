@@ -111,9 +111,9 @@ public class StreamMain {
 //            out2.write(buff2, b, count2+b);
 //        while ((count2 = in2.read(buff2)) != -1)
 //            out3.write(buff2, b, count2+b);
-        closeQuietly(in);
-        closeQuietly(in1);
-        closeQuietly(in2);
+//        closeQuietly(in);
+//        closeQuietly(in1);
+//        closeQuietly(in2);
 //        OutputStream out3 = new FileOutputStream("C:\\dir1\\testStrPartsTogether.txt");
 //        InputStream in1 = new FileInputStream("C:\\dir1\\testStrPart1.txt");
 //        InputStream in2 = new FileInputStream("C:\\dir1\\testStrPart2.txt");
@@ -122,7 +122,7 @@ public class StreamMain {
 //        while ((count2=in.read(buff2))!=-1)
 //            out3.write(buff2, 1);
 //
-    }
+//    }
 
     public static void main(String[] args) throws IOException {
 //        java.io.InputStream inFile = new FileInputStream("C:\\dir1\\testStr.txt");
@@ -152,7 +152,7 @@ public class StreamMain {
         File file2 = new File("C:\\dir1\\testStrCopy.txt");
         try {
             readAndWriteByByteArray(file1, file2);
-            separAndConnectFile(file1, 256);
+//            separAndConnectFile(file1, 256);
         } catch (IOException e) {
             throw new IOException("Error with reading or writing file" + e);
 
