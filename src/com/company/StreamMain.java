@@ -84,45 +84,35 @@ public class StreamMain {
     }
 
 
-//    public static void separAndConnectFile(File f1, int b) throws IOException {
-//        InputStream in = new FileInputStream(f1);
-//        OutputStream out1 = new FileOutputStream("C:\\dir1\\testStrPart1.txt");
-//        OutputStream out2 = new FileOutputStream("C:\\dir1\\testStrPart2.txt");
-//        OutputStream out3 = new FileOutputStream("C:\\dir1\\testStrPartsTogether.txt");
-//        InputStream in1 = new FileInputStream("C:\\dir1\\testStrPart1.txt");
-//        InputStream in2 = new FileInputStream("C:\\dir1\\testStrPart2.txt");
-//        int count = 0;
-//        int count2 = 0;
-//        byte[] buff = new byte[1024];
-//        while ((count = in.read(buff)) != -1) {
-//            if (b <= 1024)
-//                out1.write(buff, 0, );
-//            else out1.write(buff, 1, count);
-//        }
-
-//        byte[] buff1 = new byte[b];
-//        byte[] buff2 = new byte[1024];
-//        in.read(buff2);
-////        System.out.println("coun1="+count1);
-//        out1.write(buff2, 0, b);
-//        in1.read(buff2);
-//        out3.write(buff2);
-//        while ((count2 = in.read(buff2)) != -1)
-//            out2.write(buff2, b, count2+b);
-//        while ((count2 = in2.read(buff2)) != -1)
-//            out3.write(buff2, b, count2+b);
-//        closeQuietly(in);
-//        closeQuietly(in1);
-//        closeQuietly(in2);
-//        OutputStream out3 = new FileOutputStream("C:\\dir1\\testStrPartsTogether.txt");
-//        InputStream in1 = new FileInputStream("C:\\dir1\\testStrPart1.txt");
-//        InputStream in2 = new FileInputStream("C:\\dir1\\testStrPart2.txt");
-//        count1 = in.read(buff1);
-//        out1.write(buff1, 0, count1);
-//        while ((count2=in.read(buff2))!=-1)
-//            out3.write(buff2, 1);
-//
-//    }
+    public static void separAndPlusFile(File f1, int lenb) throws IOException {
+        int bufSize = 512;
+        InputStream in = new BufferedInputStream(new FileInputStream(f1), bufSize);
+        OutputStream out1 = new BufferedOutputStream(new FileOutputStream("C:\\dir1\\testStrPart1.txt"), bufSize);
+        OutputStream out2 = new BufferedOutputStream(new FileOutputStream("C:\\dir1\\testStrPart2.txt"), bufSize);
+        int oneByte, count = 0;
+        while ((oneByte = in.read()) != -1) {
+            if (lenb == 0) break;
+            count++;
+            out1.write(oneByte);
+            if (count == lenb) break;
+        }
+        while ((oneByte = in.read()) != -1)
+            out2.write(oneByte);
+        closeQuietly(in);
+        closeAndFlushQuietly(out1);
+        closeAndFlushQuietly(out2);
+        InputStream in2 = new BufferedInputStream(new FileInputStream("C:\\dir1\\testStrPart1.txt"), bufSize);
+        InputStream in3 = new BufferedInputStream(new FileInputStream("C:\\dir1\\testStrPart2.txt"), bufSize);
+        OutputStream out3 = new BufferedOutputStream(new FileOutputStream("C:\\dir1\\testStrPart1Part2.txt"), bufSize);
+        while ((oneByte = in2.read()) != -1)
+            out3.write(oneByte);
+        while ((oneByte = in3.read()) != -1)
+            out3.write(oneByte);
+        closeQuietly(in2);
+        closeQuietly(in3);
+        closeAndFlushQuietly(out3);
+    }
+//       }
 
     public static void main(String[] args) throws IOException {
 //        java.io.InputStream inFile = new FileInputStream("C:\\dir1\\testStr.txt");
@@ -152,12 +142,11 @@ public class StreamMain {
         File file2 = new File("C:\\dir1\\testStrCopy.txt");
         try {
             readAndWriteByByteArray(file1, file2);
-//            separAndConnectFile(file1, 256);
+            separAndPlusFile(file1, 5000);
+            System.out.println("fileSize = " + file2.length());
         } catch (IOException e) {
             throw new IOException("Error with reading or writing file" + e);
-
         }
-
 
     }
 }
